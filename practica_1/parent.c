@@ -90,7 +90,7 @@ int main(){
 
         /*Se escriben los argumentos para el proceso hijo*/
         char *arg_Ptr[4];
-        arg_Ptr[0] = " child.c";
+        arg_Ptr[0] = " child.bin";
         arg_Ptr[1] = " Hola, ";
         arg_Ptr[2] = " Soy el proceso hijo! ";
         arg_Ptr[3] = NULL; // El ultimo indice de argv debe siempre de ser NULL
