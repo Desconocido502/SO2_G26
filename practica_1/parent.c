@@ -29,7 +29,7 @@ void monitor_syscalls(int pid1, int pid2) {
     system(command);
 }
 
-//JUstamente luego de recibir el ctrl+c
+//Justamente luego de recibir el ctrl+c
 void stat(int pid1, int pid2, int monitor, int fd) {
     printf("\n");
     printf("Terminado la ejecución...\n");
@@ -51,7 +51,7 @@ void stat(int pid1, int pid2, int monitor, int fd) {
                 c_write++;
             }
         
-    }
+        }
     }
     calls = c_open + c_read + c_write;
 
@@ -73,7 +73,7 @@ int main(){
     // 
     signal(SIGINT, ctrlc_handler);
 
-    //Se abre el archivo syscalls.log, en caso de que no exista, y se existe, se vacía
+    //Se abre el archivo syscalls.log, en caso de que no exista, y si existe, se vacía
     int fd = open("syscalls.log", O_RDWR | O_CREAT | O_TRUNC, 0777);
     //Tmabien se abre practica1.txt que será utilizado por los hijos pero se cierra acá
     int fdch = open("practica1.txt",  O_CREAT | O_TRUNC, 0777);
@@ -118,7 +118,7 @@ int main(){
             arg_Ptr[3] = NULL; // El ultimo indice de argv siempre debe de ser NULL
 
             /*Se ejecuta el ejecutable del proceso hijo*/
-            execv("/home/luisa/Escritorio/Sopes2/SO2_202003381/Practica 1/child.bin", arg_Ptr);
+            execv("/home/sopes2/Documents/GitHub/SO2_G26/practica_1/child.bin", arg_Ptr);
         }else {
 
             //printf("Soy el proceso padre\n");
