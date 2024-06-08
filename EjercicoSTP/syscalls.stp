@@ -1,0 +1,29 @@
+# Archivo: monitor_syscalls.stp
+
+global log_file
+
+probe begin {
+    log_file = sprintf("/home/sopes2/Documents/GitHub/SO2_G26/EjercicoSTP/syscalls.log")
+    printf("Registrando llamadas al sistema en %s\n", log_file)
+}
+
+probe syscall.fork {
+    printf("%s(%d) fork() llamado\n", execname(), pid()) >> log_file
+}
+
+probe syscall.execve {
+    printf("%s(%d) execve(%s) llamado\n", execname(), pid(), argstr) >> log_file
+}
+
+probe syscall.wait4 {
+    printf("%s(%d) wait4() llamado\n", execname(), pid()) >> log_file
+}
+
+probe syscall.close {
+    printf("%s(%d) close(%d) llamado\n", execname(), pid(), fd) >> log_file
+}
+
+# after 10 seconds
+probe timer.ms(10000) {
+    exit ()
+}

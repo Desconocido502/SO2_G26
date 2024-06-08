@@ -1,0 +1,20 @@
+#!/usr/bin/stap
+
+probe begin {
+    printf("Hola mundo!\n");
+    //exit();
+}
+
+probe syscall.read {
+    //printf("read() syscall\n");
+    if(pid() == $1 || pid() == $2){
+        printf("PID[%d] %s -> Read\n", pid(), execname());
+    }
+}
+
+probe syscall.write {
+    //printf("read() syscall\n");
+    if(pid() == $1 || pid() == $2){
+        printf("PID[%d] %s -> Write\n", pid(), execname());
+    }
+}
