@@ -7,17 +7,19 @@
 #include <signal.h> // Incluir el encabezado para sig_atomic_t
 
 //Para controlar practica1.txt
-int fdch; 
+int file_descriptor; 
 
 // Variable compartida para indicar si se recibió la señal SIGINT
 volatile sig_atomic_t sigint_received = 0;
 
+//El manejador que detecta el ctrl+c
 void ctrlc_handler(int signal) {
     sigint_received = 1; // Establecer la bandera al recibir la señal SIGINT
-    close(fdch); // Cerrar el archivo fdch
+    close(file_descriptor); // Cerrar el archivo file_descriptor
 }
 
-char random_char() {
+// Función para generar un caracter aleatorio
+char generate_random_character() {
     const char charset[] = "0123456789"
                            "abcdefghijklmnopqrstuvwxyz"
                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -31,8 +33,8 @@ int main(int argc, char *argv[]){
     srand(time(NULL) + getpid());
     
     //Abrir el archivo en modo lectura y escritura
-    fdch = open("practica1.txt", O_RDWR | O_CREAT | O_TRUNC, 0777); 
-    if (fdch < 0) {
+    file_descriptor = open("practica1.txt", O_RDWR | O_CREAT | O_TRUNC, 0777); 
+    if (file_descriptor < 0) {
         perror("Error al abrir practica1.txt");
         exit(EXIT_FAILURE);
     }
@@ -45,41 +47,33 @@ int main(int argc, char *argv[]){
 
         // Tiempo de espera entre cada operación
         int time_to_wait  = rand() % 3 + 1;
-        // Tipo de operación a realizar: 1-> Open, 2-> write, 3-> Read
-        int op = rand() % 3 + 1;
+        /// Tipo de operación a realizar: 1-> write, 2-> read
+        int op = rand() % 2 + 1;
 
         // Realizar la operación correspondiente
         switch (op) {
             case 1: {
-                //Para Open
-                close(fdch);
-                fdch = open("practica1.txt", O_RDWR);
-                if (fdch < 0) {
-                    perror("Error al reabrir practica1.txt");
-                    exit(EXIT_FAILURE);
+                // Para Write
+                char random_string[9]; // 8 caracteres alfanuméricos
+                for (int i = 0; i < 8; ++i) {
+                    random_string[i] = generate_random_character();
                 }
+                random_string[8] = '\n'; // Agregar el salto de línea
+                write(file_descriptor, random_string, 9);
                 break;
             }
             case 2: {
-                //Para Write
-                char random_string[8]; // 8 caracteres alfanuméricos
-                for (int i = 0; i < 8; ++i) {
-                    random_string[i] = random_char();
-                }
-                write(fdch, random_string, 8);
-                break;
-            }
-            case 3: {
                 // Para Read
                 char buff[8];
-                read(fdch, buff, 8);
+                //lseek(file_descriptor, 0, SEEK_SET); // Mover el puntero al inicio del archivo
+                read(file_descriptor, buff, 8);
                 break;
             }
             default:
                 break;
         }
         // Espera a que pase el tiempo especificado
-        sleep(time_to_wait ); 
+        sleep(time_to_wait);
     }
 
     return 0;
