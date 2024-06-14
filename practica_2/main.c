@@ -501,6 +501,40 @@ void print_error_report() {
     }
 }
 
+// Función para generar el reporte del estado de cuentas en formato JSON
+void generate_account_report(struct user_data usuarios[], int num_usuarios) {
+    cJSON *root = cJSON_CreateArray();  // Crear un array JSON
+
+    for (int i = 0; i < num_usuarios; ++i) {
+        cJSON *usuario_obj = cJSON_CreateObject();  // Crear un objeto JSON para cada usuario
+
+        // Añadir los campos al objeto JSON
+        cJSON_AddNumberToObject(usuario_obj, "no_cuenta", usuarios[i].account_number);
+        cJSON_AddStringToObject(usuario_obj, "nombre", usuarios[i].full_name);
+        cJSON_AddNumberToObject(usuario_obj, "saldo", usuarios[i].saldo);
+
+        // Añadir el objeto usuario al array JSON
+        cJSON_AddItemToArray(root, usuario_obj);
+    }
+
+    // Convertir la estructura cJSON al formato de texto JSON
+    char *json_str = cJSON_Print(root);
+
+    // Crear el archivo de reporte y escribir el contenido JSON
+    FILE *report_file = fopen("account_report.json", "w");
+    if (!report_file) {
+        perror("Error opening report file");
+        cJSON_Delete(root);
+        return;
+    }
+    fprintf(report_file, "%s\n", json_str);
+    fclose(report_file);
+
+    // Liberar la memoria utilizada por cJSON y la cadena JSON
+    cJSON_Delete(root);
+    free(json_str);
+}
+
 int main() {
     char route_users[200];
     char route_operations[200];
@@ -574,6 +608,7 @@ int main() {
                 printf("Operaciones individuales\n");
                 break;
             case '4':
+                generate_account_report(users, num_users);
                 printf("Generar estados de cuenta\n");
                 break;
             case '5':

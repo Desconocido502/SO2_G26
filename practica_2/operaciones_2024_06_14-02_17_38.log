@@ -1,0 +1,26 @@
+------------------------------------------REPORTE DE CARGA DE OPERACIONES------------------------------------------
+Resumen de operaciones
+Fecha: 2024-06-14 02:17:38
+Operaciones realizadas:
+Retiros: 0
+Depósitos: 0
+Transferencias: 0
+Total: 0
+Operaciones por hilo:
+Hilo #1: 0
+Hilo #2: 0
+Hilo #3: 0
+Hilo #4: 0
+Total: 0
+Errores:
+- Linea #10: Error en la operación 10: monto inválido (debe ser mayor a cero)
+- Linea #19: Error en la operación 19: tipo de operación inválido
+- Linea #28: Error en la operación 28: saldo insuficiente para retiro
+- Linea #38: Error en la operación 38: tipo de operación inválido
+- Linea #39: Error en la operación 39: saldo insuficiente para retiro
+- Linea #51: Error en la operación 51: tipo de operación inválido
+- Linea #63: Error en la operación 63: tipo de operación inválido
+- Linea #64: Error en la operación 64: número de cuenta no existe
+- Linea #72: Error en la operación 72: monto inválido (debe ser mayor a cero)
+- Linea #79: Error en la operación 79: saldo insuficiente para retiro
+- Linea #80: Error en la operación 80: tipo de operación inválido
