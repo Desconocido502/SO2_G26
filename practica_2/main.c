@@ -535,6 +535,63 @@ void generate_account_report(struct user_data usuarios[], int num_usuarios) {
     free(json_str);
 }
 
+void submenu() {
+    char option;
+    int account1, account2;
+    float amount;
+    
+    printf("|***********************OPERACIONES INDIVIDUALES***********************|\n");
+    printf("|1.Deposito                                                            |\n");
+    printf("|2.Retiro                                                              |\n");
+    printf("|3.Transferencia                                                       |\n");
+    printf("|4.Consultar cuenta                                                    |\n");
+    printf("|5.Regresar                                                            |\n");
+    printf("|**********************************************************************|\n");
+
+    scanf(" %c", &option);
+
+    switch (option) {
+        case '1':
+            printf("*****************DEPOSITO*****************\n");
+            printf("Ingrese el número de cuenta: ");
+            scanf("%d", &account1);
+            printf("Ingrese el monto a depositar: ");
+            scanf("%f", &amount);
+            // Aquí puedes llamar a la función de depósito con account1 y amount
+            break;
+        case '2':
+            printf("*****************RETIRO*****************\n");
+            printf("Ingrese el número de cuenta: ");
+            scanf("%d", &account1);
+            printf("Ingrese el monto a retirar: ");
+            scanf("%f", &amount);
+            // Aquí puedes llamar a la función de retiro con account1 y amount
+            break;
+        case '3':
+            printf("*****************TRANSFERENCIA*****************\n");
+            printf("Ingrese el número de cuenta de origen: ");
+            scanf("%d", &account1);
+            printf("Ingrese el número de cuenta de destino: ");
+            scanf("%d", &account2);
+            printf("Ingrese el monto a transferir: ");
+            scanf("%f", &amount);
+            // Aquí puedes llamar a la función de transferencia con account1, account2 y amount
+            break;
+        case '4':
+            printf("*****************CONSULTAR CUENTA*****************\n");
+            printf("Ingrese el número de cuenta: ");
+            scanf("%d", &account1);
+            // Aquí puedes llamar a la función de consulta con account1
+            break;
+        case '5':
+            printf("Regresando al menú principal...\n");
+            return;
+        default:
+            printf("Opción no válida\n");
+            break;
+    }
+}
+
 int main() {
     char route_users[200];
     char route_operations[200];
@@ -606,6 +663,7 @@ int main() {
                 break;
             case '3':
                 printf("Operaciones individuales\n");
+                submenu();
                 break;
             case '4':
                 generate_account_report(users, num_users);
@@ -623,3 +681,4 @@ int main() {
     return 0;
 }
 
+//gcc main.c users.c -o main -lcjson
