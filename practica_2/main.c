@@ -16,21 +16,17 @@ struct operation {
     float monto;
 };
 
-// Function declaration with `void` return type
 void read_json_file(char* filename) {
-    // Open the JSON file for reading
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Open File");
         return;
     }
 
-    // Get the file size
     fseek(file, 0, SEEK_END);
     long filesize = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    // Read the entire file into a buffer
     char *buffer = (char*)malloc(filesize + 1);
     if (buffer == NULL) {
         perror("Allocate buffer");
@@ -39,11 +35,8 @@ void read_json_file(char* filename) {
     }
     fread(buffer, 1, filesize, file);
     buffer[filesize] = '\0';
-
-    // Close the file
     fclose(file);
 
-    // Parse the JSON data
     cJSON *json = cJSON_Parse(buffer);
     if (json == NULL) {
         perror("Parse JSON");
@@ -57,7 +50,6 @@ void read_json_file(char* filename) {
         free(formatted_json);
     }
 
-    // Check if it's a valid JSON array
     if (!cJSON_IsArray(json)) {
         perror("JSON is not Array");
         cJSON_Delete(json);
@@ -65,7 +57,6 @@ void read_json_file(char* filename) {
         return;
     }
 
-    // Clean up
     cJSON_Delete(json);
     free(buffer);
 }
@@ -73,32 +64,30 @@ void read_json_file(char* filename) {
 int main() {
     char* filename = "test_user.json";
     read_json_file(filename);
-    // Initialize the list of users
+
     headerUsers = NULL;
     insertUser(123, "Juan Perez", 1000.0);
     insertUser(2, "Maria Lopez", 2000.0);
 
-    // Print the list of users
-    struct user* current = headerUsers;
-    while (current != NULL) {
-        printf("No. Cuenta: %d\n", current->no_cuenta);
-        printf("Nombre: %s\n", current->full_name);
-        printf("Saldo: %.2f\n", current->saldo);
-        printf("\n");
-        current = current->next;
-    }
+    printf("Estado inicial de las cuentas:\n");
+    statusAccount();
 
-    // Delete a user
+    printf("Eliminando la cuenta 123:\n");
     deleteUser(123);
+    statusAccount();
 
-    // Print the list of users after deletion
-    current = headerUsers;
-    while (current != NULL) {
-        printf("No. Cuenta: %d\n", current->no_cuenta);
-        printf("Nombre: %s\n", current->full_name);
-        printf("Saldo: %.2f\n", current->saldo);
-        printf("\n");
-        current = current->next;
-    }
+    printf("Realizando un depósito en la cuenta 2:\n");
+    submit(2, 500.0);
+    statusAccount();
+
+    printf("Realizando un retiro de la cuenta 2:\n");
+    removal(2, 700.0, 0);
+    statusAccount();
+
+    printf("Realizando una transferencia de la cuenta 2 a la cuenta 3 (que no existe):\n");
+    insertUser(3, "Carlos Gomez", 1500.0);
+    transfer(2, 3, 300.0, 0);
+    statusAccount();
+
     return 0;
 }
