@@ -1,0 +1,112 @@
+void user_load(cJSON *json);
+void operation_load(cJSON *json);
+void read_json_file(char* filename, char* tipo);
+
+
+// Metodo para leer el archivo JSON
+void read_json_file(char* filename, char* tipo) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        perror("Open File");
+        return;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long filesize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    char *buffer = (char*)malloc(filesize + 1);
+    if (buffer == NULL) {
+        perror("Allocate buffer");
+        fclose(file);
+        return;
+    }
+    fread(buffer, 1, filesize, file);
+    buffer[filesize] = '\0';
+    fclose(file);
+
+    cJSON *json = cJSON_Parse(buffer);
+    if (json == NULL) {
+        fprintf(stderr, "Error parsing JSON: %s\n", cJSON_GetErrorPtr());
+        free(buffer);
+        return;
+    }
+
+    if (!cJSON_IsArray(json)) {
+        fprintf(stderr, "JSON is not an array\n");
+        cJSON_Delete(json);
+        free(buffer);
+        return;
+    }
+
+    if (strcmp(tipo, "user") == 0) {
+        user_load(json);
+    } else if (strcmp(tipo, "operation") == 0) {
+        operation_load(json);
+    }
+
+    cJSON_Delete(json);
+    free(buffer);
+}
+
+void user_load (cJSON *json){
+    for (int i = 0; i < cJSON_GetArraySize(json); ++i) {
+        cJSON *item = cJSON_GetArrayItem(json, i);
+
+        // Validar que 'item' sea un objeto JSON válido
+        if (!cJSON_IsObject(item)) {
+            fprintf(stderr, "Invalid operation object\n");
+            continue; // Omitir el registro con error y continuar con el siguiente
+        }
+
+        cJSON *account_number = cJSON_GetObjectItem(item, "no_cuenta");
+        cJSON *full_name = cJSON_GetObjectItem(item, "nombre");
+        cJSON *saldo = cJSON_GetObjectItem(item, "saldo");
+
+        // Validar la existencia y tipo correcto de los campos
+        if (!cJSON_IsNumber(account_number) || !cJSON_IsString(full_name) || !cJSON_IsNumber(saldo)) {
+            fprintf(stderr, "Invalid operation object\n");
+            continue;
+        }
+
+        int acc_number = account_number->valueint;
+        const char* name = full_name->valuestring;
+        float balance = saldo->valuedouble;
+
+        printf("No. Cuenta: %d\n", acc_number);
+        printf("Nombre: %s\n", name);
+        printf("Saldo: %.2f\n", balance);
+
+    }
+
+}
+
+void operation_load (cJSON *json){
+    
+    for (int i = 0; i < cJSON_GetArraySize(json); ++i) {
+        cJSON *item = cJSON_GetArrayItem(json, i);
+
+        cJSON *operation = cJSON_GetObjectItem(item, "operacion");
+        cJSON *account1 = cJSON_GetObjectItem(item, "cuenta1");
+        cJSON *account2 = cJSON_GetObjectItem(item, "cuenta2");
+        cJSON *amount = cJSON_GetObjectItem(item, "monto");
+
+        // Validar la existencia y tipo correcto de los campos
+        if (!cJSON_IsNumber(operation) || !cJSON_IsNumber(account1) || !cJSON_IsNumber(amount)) {
+            fprintf(stderr, "Invalid operation object\n");
+            continue;;
+        }
+
+        int op_type = operation->valueint;
+        int acc1 = account1->valueint;
+        int acc2 = (account2 && cJSON_IsNumber(account2)) ? account2->valueint : 0; // Cuenta2 puede ser nulo o no un número válido
+        float amt = amount->valuedouble;
+
+        printf("Operación: %d\n", op_type);
+        printf("Cuenta 1: %d\n", acc1);
+        printf("Cuenta 2: %d\n", acc2);
+        printf("Monto: %.2f\n", amt);
+
+    }
+
+}

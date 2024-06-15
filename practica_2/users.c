@@ -134,3 +134,14 @@ void transfer(int account_number, int account_number2, float amount, int line){
         }
     }
 }
+
+void printUsers() {
+    struct user* current = headerUsers;
+    while (current != NULL) {
+        printf("No. Cuenta: %d\n", current->no_cuenta);
+        printf("Nombre: %s\n", current->full_name);
+        printf("Saldo: %.2f\n", current->saldo);
+        printf("\n");
+        current = current->next;
+    }
+}

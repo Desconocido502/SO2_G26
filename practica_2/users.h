@@ -25,6 +25,7 @@ struct user* getUser(int account_number);  // Utilizar struct aquí
 void submit(int account_number, float amount);
 void removal(int account_number, float amount, int line);
 void transfer(int account_number, int account_number2, float amount, int line);
+void printUsers();
 
 // Declaración de la cabeza de la lista (debe estar en el .h si se usa extern)
 extern struct user* headerUsers;
