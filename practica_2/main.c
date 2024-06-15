@@ -14,6 +14,10 @@
 #define THREADS_USERS 3
 #define THREADS_OPERATIONS 4
 
+typedef struct {
+    char mensaje[256];
+} Error;
+
 pthread_mutex_t lock;
 
 // Variables para contar usuarios cargados por cada hilo
@@ -35,7 +39,7 @@ int operaciones_hilo3 = 0;
 int operaciones_hilo4 = 0;
 
 // Variables para almacenar errores
-char errores[MAX_ERRORS][100];
+Error errores[MAX_ERRORS];
 int num_errores = 0;
 
 // Estructura para pasar datos a cada hilo
@@ -156,7 +160,7 @@ void* loadUsers(void* arg) {
 
         // Validar que 'item' sea un objeto JSON válido
         if (!cJSON_IsObject(item)) {
-            sprintf(errores[num_errores], "Error en el formato del objeto JSON en el registro %d: no es un objeto JSON válido", i + 1);
+            sprintf(errores[num_errores].mensaje, "Error en el formato del objeto JSON en el registro %d: no es un objeto JSON válido", i + 1);
             continue;
         }
 
@@ -177,13 +181,13 @@ void* loadUsers(void* arg) {
 
         // Validaciones adicionales
         if (acc_number <= 0) {
-            sprintf(errores[num_errores], "Linea #%d: Numero de cuenta no es un numero entero positivo", i + 1);
+            sprintf(errores[num_errores].mensaje, "Linea #%d: Numero de cuenta no es un numero entero positivo", i + 1);
             num_errores++;
             continue;
         }
 
         if (balance < 0) {
-            sprintf(errores[num_errores], "Linea #%d: Saldo no puede ser menor a 0", i + 1);
+            sprintf(errores[num_errores].mensaje, "Linea #%d: Saldo no puede ser menor a 0", i + 1);
             num_errores++;
             continue;
         }
@@ -238,11 +242,168 @@ void generateReportLoadUsers(){
     if (num_errores > 0) {
         fprintf(file, "Errores:\n");
         for (int i = 0; i < num_errores; ++i) {
-            fprintf(file, "%s\n", errores[i]);
+            fprintf(file, "%s\n", errores[i].mensaje);
         }
     }
 
     fclose(file);
+    printf("¡Usuarios cargados!\n");
+}
+
+void* loadOperations(void* arg) {
+    ThreadInfo *thread_hilo = (ThreadInfo *)arg;
+    cJSON *json;
+
+    fseek(thread_hilo->archivo, 0, SEEK_END);
+    long filesize = ftell(thread_hilo->archivo);
+    fseek(thread_hilo->archivo, 0, SEEK_SET);
+
+    char *buffer = (char*)malloc(filesize + 1);
+    if (buffer == NULL) {
+        perror("Allocate buffer");
+        fclose(thread_hilo->archivo);
+        return NULL;
+    }
+    fread(buffer, 1, filesize, thread_hilo->archivo);
+    buffer[filesize] = '\0';
+
+    json = cJSON_Parse(buffer);
+    if (json == NULL) {
+        fprintf(stderr, "Error parsing JSON: %s\n", cJSON_GetErrorPtr());
+        free(buffer);
+        fclose(thread_hilo->archivo);
+        return NULL;
+    }
+
+    if (!cJSON_IsArray(json)) {
+        fprintf(stderr, "JSON is not an array\n");
+        cJSON_Delete(json);
+        free(buffer);
+        fclose(thread_hilo->archivo);
+        return NULL;
+    }
+
+    int num_operations = cJSON_GetArraySize(json);
+    int operations_per_thread = num_operations / THREADS_OPERATIONS;
+    int start_index = thread_hilo->id * operations_per_thread;
+    int end_index = (thread_hilo->id == THREADS_OPERATIONS - 1) ? num_operations : start_index + operations_per_thread;
+
+    for (int i = start_index; i < end_index; ++i) {
+        cJSON *item = cJSON_GetArrayItem(json, i);
+
+        if (!cJSON_IsObject(item)) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Error en el formato del objeto JSON en el registro %d: no es un objeto JSON válido", i + 1);
+            continue;
+        }
+
+        cJSON *operation_type = cJSON_GetObjectItem(item, "operacion");
+        cJSON *account1 = cJSON_GetObjectItem(item, "cuenta1");
+        cJSON *account2 = cJSON_GetObjectItem(item, "cuenta2");
+        cJSON *amount = cJSON_GetObjectItem(item, "monto");
+
+        if (!cJSON_IsNumber(operation_type) || !cJSON_IsNumber(account1) || !cJSON_IsNumber(amount)) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Invalid operation object at line %d", i + 1);
+            continue;
+        }
+
+        int op_type = operation_type->valueint;
+        int acc1 = account1->valueint;
+        int acc2 = (account2 != NULL) ? account2->valueint : 0;
+        float monto = amount->valuedouble;
+
+        if (op_type < 1 || op_type > 4) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Linea #%d: Tipo de operacion no es valido", i + 1);
+            continue;
+        }
+
+        if (acc1 <= 0) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Linea #%d: Numero de cuenta no es un numero entero positivo", i + 1);
+            continue;
+        }
+
+        if (monto <= 0) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Linea #%d: Monto no es un numero positivo", i + 1);
+            continue;
+        }
+
+        if (op_type == 3 && acc2 <= 0) {
+            snprintf(errores[num_errores++].mensaje, sizeof(errores[num_errores].mensaje), "Linea #%d: Numero de cuenta destino no es un numero entero positivo", i + 1);
+            continue;
+        }
+
+        if (op_type == 1) {
+            submit(acc1, monto);
+            num_depositos++;
+        } else if (op_type == 2) {
+            removal(acc1, monto, i + 1);
+            num_retiros++;
+        } else if (op_type == 3) {
+            transfer(acc1, acc2, monto, i + 1);
+            num_transferencias++;
+        }
+
+        operaciones_leidas++;
+
+        printf("Hilo %d - Operacion %d: Tipo: %d, Cuenta 1: %d, Cuenta 2: %d, Monto: %.2f\n", thread_hilo->id, i + 1, op_type, acc1, acc2, monto);
+
+        if (thread_hilo->id == 0) {
+            operaciones_hilo1++;
+        } else if (thread_hilo->id == 1) {
+            operaciones_hilo2++;
+        } else if (thread_hilo->id == 2) {
+            operaciones_hilo3++;
+        } else {
+            operaciones_hilo4++;
+        }
+    }
+
+    cJSON_Delete(json);
+    free(buffer);
+    fclose(thread_hilo->archivo);
+
+    return NULL;
+}
+
+
+void generateReportLoadOperations(){
+    char filename[100];
+    time_t current_time;
+    struct tm *timeinfo;
+
+    time(&current_time);
+    timeinfo = localtime(&current_time);
+
+    strftime(filename, sizeof(filename), "operaciones_%Y-%m-%d_%H-%M-%S.log", timeinfo);
+
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Error al crear archivo de reporte");
+        return;
+    }
+
+    fprintf(file, "Operaciones\n");
+    fprintf(file, "Fecha: %d-%02d-%02d %02d:%02d:%02d\n", 
+            timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday,
+            timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    fprintf(file, "Operaciones Realizadas:\n");
+    fprintf(file, "Hilo #1: %d\n", operaciones_hilo1);
+    fprintf(file, "Hilo #2: %d\n", operaciones_hilo2);
+    fprintf(file, "Hilo #3: %d\n", operaciones_hilo3);
+    fprintf(file, "Hilo #4: %d\n", operaciones_hilo4);
+    fprintf(file, "Total: %d\n", operaciones_hilo1 + operaciones_hilo2 + operaciones_hilo3 + operaciones_hilo4);
+    fprintf(file, "Depositos: %d\n", num_depositos);
+    fprintf(file, "Retiros: %d\n", num_retiros);
+    fprintf(file, "Transferencias: %d\n", num_transferencias);
+
+    if (num_errores > 0) {
+        fprintf(file, "Errores:\n");
+        for (int i = 0; i < num_errores; ++i) {
+            fprintf(file, "%s\n", errores[i].mensaje);
+        }
+    }
+
+    fclose(file);
+    printf("¡Operaciones cargadas!\n");
 }
 
 
@@ -296,6 +457,21 @@ void menu(){
                 printf("Ingrese la ruta del archivo de operaciones: ");
                 scanf("%s", route_operations);
                 getchar(); // Consumir el carácter de nueva línea residual
+                ThreadInfo threads_operation[THREADS_OPERATIONS];
+                pthread_t tid_hilos_operation[THREADS_OPERATIONS];
+                for (int i = 0; i < THREADS_OPERATIONS; i++) {
+                    threads_operation[i].id = i;
+                    threads_operation[i].archivo = fopen(route_operations, "r");
+                    pthread_mutex_init(&threads_operation[i].mutex, NULL);
+                    pthread_create(&tid_hilos_operation[i], NULL, loadOperations, &threads_operation[i]);
+                }
+
+                // Esperar a que finalicen los hilos
+                for (int i = 0; i < THREADS_OPERATIONS; i++) {
+                    pthread_join(tid_hilos_operation[i], NULL);
+                }
+
+                generateReportLoadOperations();
                 break;
             case '3':
                 printf("Operaciones individuales\n");
