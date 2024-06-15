@@ -406,6 +406,40 @@ void generateReportLoadOperations(){
     printf("¡Operaciones cargadas!\n");
 }
 
+void generate_account_report(){
+    cJSON *root = cJSON_CreateArray();  // Crear un array JSON
+    struct user* current = headerUsers;
+    while (current != NULL) {
+        cJSON *usuario_obj = cJSON_CreateObject();  // Crear un objeto JSON para cada usuario
+
+        // agregar los campos al object
+        cJSON_AddNumberToObject(usuario_obj, "no_cuenta", current->no_cuenta);
+        cJSON_AddStringToObject(usuario_obj, "nombre", current->full_name);
+        cJSON_AddNumberToObject(usuario_obj, "saldo", current->saldo);
+
+        // Agregar el objeto al array
+        cJSON_AddItemToArray(root, usuario_obj);
+        current = current->next;
+    }
+
+    //convertir la estructura cJSON al formato de texto JSON
+    char *json_str = cJSON_Print(root);
+
+    //crear el archivo de reporte y escribir el contenido JSON
+    FILE *report_file = fopen("account_report.json", "w");
+    if(!report_file){
+        perror("Error al crear el archivo de reporte");
+        cJSON_Delete(root);
+        return;
+    }
+    fprintf(report_file, "%s", json_str);
+    fclose(report_file);
+
+    //liberar la memoria utilizada
+    cJSON_Delete(root);
+    free(json_str);
+}
+
 
 // MENU principal
 void menu(){
@@ -479,6 +513,7 @@ void menu(){
                 break;
             case '4':
                 printf("Generar estados de cuenta\n");
+                generate_account_report();
                 break;
             case '5':
                 printf("Saliendo...\n");

@@ -1,0 +1,26 @@
+Operaciones
+Fecha: 2024-06-14 22:13:43
+Operaciones Realizadas:
+Hilo #1: 49
+Hilo #2: 47
+Hilo #3: 47
+Hilo #4: 46
+Total: 189
+Depositos: 64
+Retiros: 61
+Transferencias: 59
+Errores:
+Linea #69: Saldo no puede ser menor a 0
+Linea #41: Saldo no puede ser menor a 0
+Linea #19: Saldo no puede ser menor a 0
+Linea #10: Monto no es un numero positivo
+Linea #63: Tipo de operacion no es valido
+Linea #72: Monto no es un numero positivo
+Linea #86: Tipo de operacion no es valido
+Linea #173: Monto no es un numero positivo
+Linea #184: Monto no es un numero positivo
+Linea #187: Monto no es un numero positivo
+Linea #195: Tipo de operacion no es valido
+Linea #124: Monto no es un numero positivo
+Linea #140: Monto no es un numero positivo
+Linea #145: Tipo de operacion no es valido
