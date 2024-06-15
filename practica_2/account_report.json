@@ -13,11 +13,11 @@
 	}, {
 		"no_cuenta":	1002,
 		"nombre":	"Esra Shatford",
-		"saldo":	6800.4697265625
+		"saldo":	7300.4697265625
 	}, {
 		"no_cuenta":	3959,
 		"nombre":	"Meaghan Scandrett",
-		"saldo":	1325.3897705078125
+		"saldo":	1325.3900146484375
 	}, {
 		"no_cuenta":	5086,
 		"nombre":	"Kellina Ivshin",
@@ -25,7 +25,7 @@
 	}, {
 		"no_cuenta":	5709,
 		"nombre":	"Clementius Dreghorn",
-		"saldo":	41055.515625
+		"saldo":	41055.51953125
 	}, {
 		"no_cuenta":	5118,
 		"nombre":	"Lola Skones",
@@ -53,7 +53,7 @@
 	}, {
 		"no_cuenta":	7443,
 		"nombre":	"Jeanna Yarmouth",
-		"saldo":	5916.4404296875
+		"saldo":	5916.439453125
 	}, {
 		"no_cuenta":	7213,
 		"nombre":	"Antonia Glascott",
@@ -151,138 +151,6 @@
 		"nombre":	"Mariana Casetti",
 		"saldo":	45483.4609375
 	}, {
-		"no_cuenta":	7523,
-		"nombre":	"Sharia Blacket",
-		"saldo":	4127.2099609375
-	}, {
-		"no_cuenta":	3033,
-		"nombre":	"Shayla Hare",
-		"saldo":	5505.87109375
-	}, {
-		"no_cuenta":	8692,
-		"nombre":	"Agosto Haire",
-		"saldo":	19047.96875
-	}, {
-		"no_cuenta":	9920,
-		"nombre":	"Roxy Cullnean",
-		"saldo":	19826
-	}, {
-		"no_cuenta":	1073,
-		"nombre":	"Rory Ladyman",
-		"saldo":	10885.3203125
-	}, {
-		"no_cuenta":	7782,
-		"nombre":	"Christalle Barbie",
-		"saldo":	17407.310546875
-	}, {
-		"no_cuenta":	9559,
-		"nombre":	"Verne Berger",
-		"saldo":	43534.62890625
-	}, {
-		"no_cuenta":	5350,
-		"nombre":	"Reider Nerger",
-		"saldo":	8466.1796875
-	}, {
-		"no_cuenta":	4499,
-		"nombre":	"Isa Doveston",
-		"saldo":	30189.62890625
-	}, {
-		"no_cuenta":	2096,
-		"nombre":	"Cynthy Whitsun",
-		"saldo":	23892.21875
-	}, {
-		"no_cuenta":	1927,
-		"nombre":	"Cammie Karppi",
-		"saldo":	43361.421875
-	}, {
-		"no_cuenta":	4288,
-		"nombre":	"Edee Sanday",
-		"saldo":	49117.09765625
-	}, {
-		"no_cuenta":	5877,
-		"nombre":	"Cchaddie McGillicuddy",
-		"saldo":	47314.34375
-	}, {
-		"no_cuenta":	5877,
-		"nombre":	"Louisette Biddleston",
-		"saldo":	31738.669921875
-	}, {
-		"no_cuenta":	6811,
-		"nombre":	"Darbee Mylan",
-		"saldo":	28738.73828125
-	}, {
-		"no_cuenta":	6833,
-		"nombre":	"Lissa Lennon",
-		"saldo":	5662.83935546875
-	}, {
-		"no_cuenta":	6339,
-		"nombre":	"Flemming Draycott",
-		"saldo":	1702.47900390625
-	}, {
-		"no_cuenta":	7053,
-		"nombre":	"Gabriele Rotherforth",
-		"saldo":	59368.2578125
-	}, {
-		"no_cuenta":	3509,
-		"nombre":	"Drucie Seligson",
-		"saldo":	37884.8515625
-	}, {
-		"no_cuenta":	5607,
-		"nombre":	"Zelig Fleisch",
-		"saldo":	27376.740234375
-	}, {
-		"no_cuenta":	6051,
-		"nombre":	"Curry Rogister",
-		"saldo":	42769.9453125
-	}, {
-		"no_cuenta":	1565,
-		"nombre":	"Alasdair Wansbury",
-		"saldo":	2093.920166015625
-	}, {
-		"no_cuenta":	3031,
-		"nombre":	"Frederique Westell",
-		"saldo":	43406.87109375
-	}, {
-		"no_cuenta":	7263,
-		"nombre":	"Gretna Gercke",
-		"saldo":	22814.4296875
-	}, {
-		"no_cuenta":	7925,
-		"nombre":	"Kizzee Steed",
-		"saldo":	59461.03125
-	}, {
-		"no_cuenta":	1142,
-		"nombre":	"Anne-marie Sargeant",
-		"saldo":	43165.078125
-	}, {
-		"no_cuenta":	2770,
-		"nombre":	"Caryl Sillars",
-		"saldo":	49665.73828125
-	}, {
-		"no_cuenta":	9058,
-		"nombre":	"Misha Sevin",
-		"saldo":	24381.8203125
-	}, {
-		"no_cuenta":	6496,
-		"nombre":	"D'arcy Griffithe",
-		"saldo":	42791.58984375
-	}, {
-		"no_cuenta":	3328,
-		"nombre":	"Othella Ormesher",
-		"saldo":	42099.3515625
-	}, {
-		"no_cuenta":	7184,
-		"nombre":	"Lira Kersley",
-		"saldo":	42050.21875
-	}, {
-		"no_cuenta":	2081,
-		"nombre":	"Marge Welman",
-		"saldo":	12178.01953125
-	}, {
-		"no_cuenta":	8074,
-		"nombre":	"Jill Pepperrall",
-		"saldo":	32805.61328125
-	}, {
 		"no_cuenta":	1387,
 		"nombre":	"Tamiko Cockshutt",
 		"saldo":	7729.21044921875
@@ -309,7 +177,7 @@
 	}, {
 		"no_cuenta":	7098,
 		"nombre":	"Yanaton Cranshaw",
-		"saldo":	9705.9501953125
+		"saldo":	9705.951171875
 	}, {
 		"no_cuenta":	3253,
 		"nombre":	"Dale Latehouse",
@@ -359,25 +227,25 @@
 		"nombre":	"Rachel Penelli",
 		"saldo":	51759.19140625
 	}, {
-		"no_cuenta":	4291,
-		"nombre":	"Audrye Coverly",
-		"saldo":	34418.94140625
-	}, {
-		"no_cuenta":	5349,
-		"nombre":	"Saunder Watkins",
-		"saldo":	47866.171875
-	}, {
 		"no_cuenta":	4294,
 		"nombre":	"Colver Brassington",
-		"saldo":	13552.7705078125
+		"saldo":	13552.76953125
 	}, {
 		"no_cuenta":	3959,
 		"nombre":	"Rosemonde Champ",
 		"saldo":	36898.1484375
 	}, {
+		"no_cuenta":	4291,
+		"nombre":	"Audrye Coverly",
+		"saldo":	34418.94140625
+	}, {
 		"no_cuenta":	9470,
 		"nombre":	"Quinlan Turnell",
 		"saldo":	51550.953125
+	}, {
+		"no_cuenta":	5349,
+		"nombre":	"Saunder Watkins",
+		"saldo":	47866.171875
 	}, {
 		"no_cuenta":	6361,
 		"nombre":	"Christian Houlton",
@@ -387,7 +255,139 @@
 		"nombre":	"Karlan Canario",
 		"saldo":	35366.96875
 	}, {
+		"no_cuenta":	7523,
+		"nombre":	"Sharia Blacket",
+		"saldo":	4127.2099609375
+	}, {
+		"no_cuenta":	3033,
+		"nombre":	"Shayla Hare",
+		"saldo":	5505.87109375
+	}, {
+		"no_cuenta":	8692,
+		"nombre":	"Agosto Haire",
+		"saldo":	19047.96875
+	}, {
 		"no_cuenta":	2096,
 		"nombre":	"Euell Carney",
-		"saldo":	14106.509765625
+		"saldo":	19619.7890625
+	}, {
+		"no_cuenta":	9920,
+		"nombre":	"Roxy Cullnean",
+		"saldo":	19826
+	}, {
+		"no_cuenta":	1073,
+		"nombre":	"Rory Ladyman",
+		"saldo":	10885.3203125
+	}, {
+		"no_cuenta":	7782,
+		"nombre":	"Christalle Barbie",
+		"saldo":	17407.310546875
+	}, {
+		"no_cuenta":	9559,
+		"nombre":	"Verne Berger",
+		"saldo":	43534.62890625
+	}, {
+		"no_cuenta":	5350,
+		"nombre":	"Reider Nerger",
+		"saldo":	8466.1796875
+	}, {
+		"no_cuenta":	4499,
+		"nombre":	"Isa Doveston",
+		"saldo":	30189.62890625
+	}, {
+		"no_cuenta":	2096,
+		"nombre":	"Cynthy Whitsun",
+		"saldo":	18378.939453125
+	}, {
+		"no_cuenta":	1927,
+		"nombre":	"Cammie Karppi",
+		"saldo":	43361.421875
+	}, {
+		"no_cuenta":	4288,
+		"nombre":	"Edee Sanday",
+		"saldo":	49117.09765625
+	}, {
+		"no_cuenta":	5877,
+		"nombre":	"Cchaddie McGillicuddy",
+		"saldo":	47314.34375
+	}, {
+		"no_cuenta":	5877,
+		"nombre":	"Louisette Biddleston",
+		"saldo":	31738.669921875
+	}, {
+		"no_cuenta":	6811,
+		"nombre":	"Darbee Mylan",
+		"saldo":	28738.73828125
+	}, {
+		"no_cuenta":	6833,
+		"nombre":	"Lissa Lennon",
+		"saldo":	5662.84033203125
+	}, {
+		"no_cuenta":	6339,
+		"nombre":	"Flemming Draycott",
+		"saldo":	1702.479736328125
+	}, {
+		"no_cuenta":	7053,
+		"nombre":	"Gabriele Rotherforth",
+		"saldo":	59368.2578125
+	}, {
+		"no_cuenta":	3509,
+		"nombre":	"Drucie Seligson",
+		"saldo":	37884.8515625
+	}, {
+		"no_cuenta":	5607,
+		"nombre":	"Zelig Fleisch",
+		"saldo":	27376.740234375
+	}, {
+		"no_cuenta":	6051,
+		"nombre":	"Curry Rogister",
+		"saldo":	42769.9453125
+	}, {
+		"no_cuenta":	1565,
+		"nombre":	"Alasdair Wansbury",
+		"saldo":	2093.919921875
+	}, {
+		"no_cuenta":	3031,
+		"nombre":	"Frederique Westell",
+		"saldo":	43406.87109375
+	}, {
+		"no_cuenta":	7263,
+		"nombre":	"Gretna Gercke",
+		"saldo":	22814.4296875
+	}, {
+		"no_cuenta":	7925,
+		"nombre":	"Kizzee Steed",
+		"saldo":	59461.03125
+	}, {
+		"no_cuenta":	1142,
+		"nombre":	"Anne-marie Sargeant",
+		"saldo":	43165.078125
+	}, {
+		"no_cuenta":	2770,
+		"nombre":	"Caryl Sillars",
+		"saldo":	49665.73828125
+	}, {
+		"no_cuenta":	9058,
+		"nombre":	"Misha Sevin",
+		"saldo":	24381.8203125
+	}, {
+		"no_cuenta":	6496,
+		"nombre":	"D'arcy Griffithe",
+		"saldo":	42791.58984375
+	}, {
+		"no_cuenta":	3328,
+		"nombre":	"Othella Ormesher",
+		"saldo":	42099.3515625
+	}, {
+		"no_cuenta":	7184,
+		"nombre":	"Lira Kersley",
+		"saldo":	42050.21875
+	}, {
+		"no_cuenta":	2081,
+		"nombre":	"Marge Welman",
+		"saldo":	12178.01953125
+	}, {
+		"no_cuenta":	8074,
+		"nombre":	"Jill Pepperrall",
+		"saldo":	32805.61328125
 	}]

@@ -82,6 +82,7 @@ void submenu() {
             scanf("%d", &account1);
             printf("Ingrese el monto a depositar: ");
             scanf("%f", &amount);
+            submit(account1, amount);
             // Aquí puedes llamar a la función de depósito con account1 y amount
             break;
         case '2':
@@ -90,6 +91,7 @@ void submenu() {
             scanf("%d", &account1);
             printf("Ingrese el monto a retirar: ");
             scanf("%f", &amount);
+            removal(account1, amount, 0);
             // Aquí puedes llamar a la función de retiro con account1 y amount
             break;
         case '3':
@@ -100,12 +102,21 @@ void submenu() {
             scanf("%d", &account2);
             printf("Ingrese el monto a transferir: ");
             scanf("%f", &amount);
+            transfer(account1, account2, amount, 0);
             // Aquí puedes llamar a la función de transferencia con account1, account2 y amount
             break;
         case '4':
             printf("*****************CONSULTAR CUENTA*****************\n");
             printf("Ingrese el número de cuenta: ");
             scanf("%d", &account1);
+            struct user* user = getUser(account1);
+            if (user != NULL) {
+                printf("No. Cuenta: %d\n", user->no_cuenta);
+                printf("Nombre: %s\n", user->full_name);
+                printf("Saldo: %.2f\n", user->saldo);
+            } else {
+                printf("No se encontró la cuenta\n");
+            }
             // Aquí puedes llamar a la función de consulta con account1
             break;
         case '5':

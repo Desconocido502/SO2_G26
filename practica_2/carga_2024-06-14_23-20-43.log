@@ -1,0 +1,11 @@
+Carga de usuarios
+Fecha: 2024-06-14 23:20:43
+Usuarios Cargados:
+Hilo #1: 31
+Hilo #2: 33
+Hilo #3: 34
+Total: 98
+Errores:
+Linea #41: Saldo no puede ser menor a 0
+Linea #69: Saldo no puede ser menor a 0
+Linea #19: Saldo no puede ser menor a 0
